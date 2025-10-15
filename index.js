@@ -11,9 +11,14 @@ export const Add = (numbers) =>{
 		const delimiterLine = parts[0].substring(2);
 		numString = parts[1];
 		
-		if (delimiterLine.startsWith('[') && delimiterLine.endsWith(']')) {
-			const customDelimiter = delimiterLine.substring(1, delimiterLine.length - 1);
-			delimiter = new RegExp(customDelimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+		if (delimiterLine.startsWith('[')) {
+			const delimiterMatches = delimiterLine.match(/\[([^\]]+)\]/g);
+			if (delimiterMatches) {
+				const delimiters = delimiterMatches.map(d => 
+					d.substring(1, d.length - 1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+				);
+				delimiter = new RegExp(delimiters.join('|'));
+			}
 		} else {
 			delimiter = new RegExp(`[,\n${delimiterLine.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}]`);
 		}

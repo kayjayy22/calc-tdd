@@ -37,4 +37,8 @@ describe('String Calculator', () => {
   it('should ignore numbers greater than 1000', () => {
     expect(Add("2,1001")).toBe(2);
   });
+
+  it('should support delimiters of any length', () => {
+    expect(Add("//[***]\n1***2***3")).toBe(6);
+  });
 });

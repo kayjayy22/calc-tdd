@@ -8,9 +8,15 @@ export const Add = (numbers) =>{
 	
 	if (numbers.startsWith('//')) {
 		const parts = numbers.split('\n');
-		const customDelimiter = parts[0].substring(2);
-		delimiter = new RegExp(`[,\n${customDelimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}]`);
+		const delimiterLine = parts[0].substring(2);
 		numString = parts[1];
+		
+		if (delimiterLine.startsWith('[') && delimiterLine.endsWith(']')) {
+			const customDelimiter = delimiterLine.substring(1, delimiterLine.length - 1);
+			delimiter = new RegExp(customDelimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+		} else {
+			delimiter = new RegExp(`[,\n${delimiterLine.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}]`);
+		}
 	}
 	
 	const nums = numString.split(delimiter);

@@ -21,7 +21,10 @@ export const Add = (numbers) =>{
 		if (n < 0) {
 			negatives.push(n);
 		}
-		return sum + n;
+		if (n <= 1000) {
+			return sum + n;
+		}
+		return sum;
 	}, 0);
 	
 	if (negatives.length > 0) {

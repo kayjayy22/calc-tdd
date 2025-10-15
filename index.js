@@ -14,5 +14,19 @@ export const Add = (numbers) =>{
 	}
 	
 	const nums = numString.split(delimiter);
-	return nums.reduce((sum, num) => sum + parseInt(num, 10), 0);
+	const negatives = [];
+	
+	const sum = nums.reduce((sum, num) => {
+		const n = parseInt(num, 10);
+		if (n < 0) {
+			negatives.push(n);
+		}
+		return sum + n;
+	}, 0);
+	
+	if (negatives.length > 0) {
+		throw new Error(`negatives not allowed: ${negatives.join(',')}`);
+	}
+	
+	return sum;
 }
